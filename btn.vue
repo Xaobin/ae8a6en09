@@ -21,28 +21,33 @@ export default {
 	        },
       data() {
         return {
-       // btnName:'Button',
-        defaultClass='btn btn-secondary',
-        selectedClass='btn btn-primary'
+        // btnName:'Button',
+            realClass:'',
+            defaultClass:'btn btn-secondary',
+            selectedClass:'btn btn-primary'
         },
-        props:['nameIDPS','classPS','levelPS','nameGroupPS']
+      props:['nameID','nameGroup']  
       },
       computed:{
         nameValueCP(){
-            if ( Number(this.nameIDPS<10) ){
-                this.nameIDPS="0"+this.nameIDPS
+            if ( Number(this.nameID<10) ){
+                this.nameID="0"+this.nameID
             }
         }
       },
       methods:{
-         changeButton(thid.nameIDPS){
-
+         changeButton(){
+            this.realClass=this.selectedClass;
+           this.storex.setNums(this.nameGroup, this.level,this.nameID);
          }
+      },
+      mounted(){
+        this.realClass=this.defaultClass;
       }
     }
 </script>
 
 <template>
-  <button :class="classPS" :name="nameIDPS" :level="levelPS" :nameGroup="nameGroupPS">{{nameValueCP}}</button>
+  <button :class="realClass" :name="nameID" @click="changeButton()">{{nameValueCP}}</button>
 </template>
 
