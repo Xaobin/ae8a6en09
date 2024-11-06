@@ -25,9 +25,9 @@ export default {
             realClass:'',
             defaultClass:'btn btn-secondary',
             selectedClass:'btn btn-primary'
-        },
-      props:['nameID','nameGroup']  
+        }
       },
+      props:['nameID','nameGroup'],  
       computed:{
         nameValueCP(){
             if ( Number(this.nameID<10) ){
@@ -38,7 +38,7 @@ export default {
       methods:{
          changeButton(){
             this.realClass=this.selectedClass;
-           this.storex.setNums(this.nameGroup, this.level,this.nameID);
+           this.storex.setNums(this.storex.getNameGroup(), this.storex.getLevel,this.nameID);
          }
       },
       mounted(){

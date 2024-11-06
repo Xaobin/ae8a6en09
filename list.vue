@@ -17,15 +17,15 @@ export default {
         return {
             openNums:false,
             openGroup:false
-        },
-      props:['amount','colls']  
+        }
       },
+       props:['amount','colls'],  
       computed:{
         
       },
       methods:{
          openNumsColls(){
-            
+
          }
       },
       mounted(){
@@ -35,8 +35,9 @@ export default {
 </script>
 
 <template>
- <span v-for="itt in amount">
-  <btn nameID="itt" />
+ <span v-for="itt,khey in amount" :key="khey">
+  <span v-if="((khey % colls)==0)"><br></span>
+    <btn nameID="itt" />
  </span>
 </template>
 
