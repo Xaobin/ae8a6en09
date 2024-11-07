@@ -13,24 +13,9 @@ export default {
 	            const storex = useStore();      
 		        return { storex };
 	        },
-      data() {
-        return {
-            openNums:false,
-            openGroup:false
-        }
-      },
+      
        props:['amount','colls'],  
-      computed:{
-        
-      },
-      methods:{
-         openNumsColls(){
-
-         }
-      },
-      mounted(){
-        
-      }
+     
     }
 </script>
 
