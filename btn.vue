@@ -16,7 +16,7 @@ __   ___   _  ___
 import { aStore } from '../store/store1'
 export default {
       setup() {
-	            const storex = useStore();      
+	            const storex = aStore();      
 		        return { storex };
 	        },
       data() {
