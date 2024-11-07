@@ -1,34 +1,38 @@
 import { defineStore } from 'pinia'
-import { useStorage } from "@vueuse/core";
-
+import { useStorage } from "@vueuse/core"; 
+///npm install @vueuse/core
 export const aStore = defineStore({
     id: 'mstore',
     state: () => ({
-        num: useStorage('nnt', { }),
-        nums: useStorage('nng',{name:'',vals:[],level:0}),
-        status: useStorage('nns',{status:'zero',msg:'nothing'})
+        num: useStorage('nut', { }),
+        nums: useStorage('nug',{name:'',level:0,vals:[]}),
+        config: useStorage('cfg',{realLevel:0,realGroup:''})
     }),
     actions: {
-        setNum(response) {
-            this.num = response
+        setNums(nn,ll,vv) {
+            this.nums.name=nn;
+            this.nums.level=ll;
+            this.nums.vals=vv;
         },
-        clearNum() {
-            this.num = null
+        setConfig(rl,rg){
+            this.config.realLevel=rl;
+            this.config.realGroup=rg;
         },
-        setNumsVals(response){
-            this.nums.vals=response
-        },
-        setNumsName(response){
-            this.nums.name=response
-        },
-        setNumsLevel(response){
-            this.nums.level=response
+        clearConfig(){
+            this.config.realLevel=0;
+            this.config.realGroup='';
         },
         clearNums() {
             this.nums.name = '',
             this.nums.level=0,
             this.nums.vals=[]
         },
+        getNameGroup(){
+            return this.config.realLevel;
+        },
+        getLevel(){
+            return this.config.realGroup;
+        }
         //setStatus(response){ this.transact.status=response},
         //setMsg(response){ this.transact.msg=response},
         
