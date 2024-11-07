@@ -24,7 +24,7 @@ export default{
          openListNumbers(){
             this.listAmount=this.$refs.inputAmount.value;
             this.listColls=this.$refs.inputColls.value;
-            this.listHaveZero=this.$refs.inputCheckZero.value;
+            this.listHaveZero=this.$refs.inputCheckZero.checked;
             if (this.opNums==true){ this.opNums=false; }
             else{ this.opNums=true; }
             if (this.nameButton=='Open list'){ this.nameButton='Close list'; } 

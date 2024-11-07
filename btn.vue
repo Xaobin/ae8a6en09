@@ -30,9 +30,10 @@ export default {
       props:['nameID','nameGroup'],  
       computed:{
         nameValueCP(){
-            if ( Number(this.nameID<10) ){
-                this.nameID="0"+this.nameID
+            if ( +this.nameID<10 ){
+                return "0"+this.nameID;
             }
+            else return this.nameID;
         }
       },
       methods:{
@@ -43,6 +44,8 @@ export default {
       },
       mounted(){
         this.realClass=this.defaultClass;
+        console.log('--------');
+        console.log("Name valueCP:"+this.nameValueCP+" - - - name id:"+this.nameID);
       }
     }
 </script>
