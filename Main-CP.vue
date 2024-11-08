@@ -46,32 +46,42 @@ export default{
 </script>
 
 <template>
-  <header>
+
+<div class="container text-center">
+  <div class="row">
+          <div class="col-2"></div>
+    <div class="col-7">
+          
+
    
-
-    <div class="wrapper">
     
-    </div>
-  </header>
+        <div class="input-group">
+                <span class="input-group-text" id="">Amount Numbers</span>   
+            <input type="number" class="form-control" id="inputAmount" ref="inputAmount" value="15" >
+            &nbsp;
+               <span class="input-group-text" id="" size="30">Collumns</span>
+            <input type="number" class="form-control" id="inputColls" ref="inputColls" value="3">
+        </div>
+   
+       
 
-  <main>
-    
-    <form>
-    <div class="mb-3">
-    <label for="inputNum" class="form-label">Amount Numbers:</label>
-    <input type="number" class="form-control" id="inputAmount" ref="inputAmount" value="15">
-     <label for="inputColls" class="form-label">Collumns:</label>
-    <input type="number" class="form-control" id="inputColls" ref="inputColls" value="3">
-    </div>
-    <div class="form-check">
-     <input class="form-check-input" type="checkbox" checked id="inputCheckZero" 
-     ref="inputCheckZero" @click="testaCheck()">
-     <label class="form-check-label" for="inputCheckZero">Have Zero</label>
-   </div>
-    </form>
-    <button class="btn btn-sm btn-primary" @click="openListNumbers()">{{nameButton}}</button>
+        <div class="input-group">
+        <input class="form-check-input" type="checkbox" checked id="inputCheckZero" 
+        ref="inputCheckZero" @click="testaCheck()">
+        <label class="form-check-label" for="inputCheckZero">&nbsp;Have Zero</label>
+       </div>
+
+
+        <button class="btn btn-sm btn-primary" @click="openListNumbers()">{{nameButton}}</button>
    
         <span v-if="opNums==true"><list :amount="listAmount" :colls="listColls" :zero="listHaveZero" /></span>
-  </main>
+
+     </div>
+        <div class="col-1"></div>
+        
+  </div>
+</div>
+
+  
 </template>
 

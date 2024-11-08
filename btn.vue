@@ -44,8 +44,7 @@ export default {
       },
       mounted(){
         this.realClass=this.defaultClass;
-        console.log('--------');
-        console.log("Name valueCP:"+this.nameValueCP+" - - - name id:"+this.nameID);
+       
       }
     }
 </script>
