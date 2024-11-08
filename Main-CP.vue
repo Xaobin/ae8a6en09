@@ -62,6 +62,13 @@ export default{
 <div class="container text-center mt-3">
   <div class="row">
           <div class="col-2">
+
+          <span v-if="storex.getTmpLength()>0">
+            <mark>Selected numbers:</mark><br>
+            <span v-for="vall in storex.getTmpNums()"> 
+                 <h6 class="badge bg-secondary">{{vall}}</h6>
+            </span>
+          </span>
           
           </div>
     <div class="col-7">
