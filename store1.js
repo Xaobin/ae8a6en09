@@ -4,35 +4,69 @@ import { useStorage } from "@vueuse/core";
 export const aStore = defineStore({
     id: 'mstore',
     state: () => ({
-        num: useStorage('nut', { }),
-        nums: useStorage('nug',{name:'',level:0,vals:[]}),
-        config: useStorage('cfg',{realLevel:0,realGroup:''})
+        tmpNums: useStorage('tmp', []),
+        groupNums: useStorage('nums',{name:0,level:0,vals:[]}),
+        config: useStorage('cfg',{realLevel:1,realGroup:1}),
+        general: useStorage('gen',{})
     }),
     actions: {
-        setNums(nn,ll,vv) {
-            this.nums.name=nn;
-            this.nums.level=ll;
-            this.nums.vals=vv;
+        addTmpNum(num){
+            if (this.tmpNums.includes(num)==false){
+                let aa=this.tmpNums.length;
+                //aa++;
+                this.tmpNums[aa]=num;
+            } 
+            else{ const index = this.tmpNums.indexOf(num);
+                //console.log("Index:"+index);
+            if (index > -1) {   this.tmpNums.splice(index, 1); } 
+             }
         },
-        setConfig(rl,rg){
-            this.config.realLevel=rl;
+        getTmpNums(){
+            return this.tmpNums;
+        },
+        clearTmpNums(){
+            this.tmpNums=[];
+        },
+        setGroup(rg){
             this.config.realGroup=rg;
+        },
+        getGroup(){
+            return this.config.realGroup;
+        },
+        getLevel(){
+            return this.config.realLevel;
+        },
+        setLevel(lv){
+            this.config.realLevel=lv;
+        },
+        incrementLevel(){
+            let ll=this.config.level;
+            ll++;
+            this.config.level=ll;
+        },
+        incrementGroup(){
+            let gg=this.config.group;
+            gg++;
+            this.config.group=gg;
         },
         clearConfig(){
             this.config.realLevel=0;
             this.config.realGroup='';
+        },    
+        closeGroup(){
+            this.addGeneral(this.groupNums);
+            this.clearTmpNums();
+            this.incrementGroup();
+            this.groupNums.name=this.getGroup();
+            this.groupNums.level=this.getLevel();
+            this.groupNums.vals=this.getTmpNums();
         },
-        clearNums() {
-            this.nums.name = '',
-            this.nums.level=0,
-            this.nums.vals=[]
-        },
-        getNameGroup(){
-            return this.config.realLevel;
-        },
-        getLevel(){
-            return this.config.realGroup;
+        addGeneral(itt){
+            this.general[this.getGroup]=itt;
         }
+      
+       
+       
         //setStatus(response){ this.transact.status=response},
         //setMsg(response){ this.transact.msg=response},
         

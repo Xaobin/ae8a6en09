@@ -37,9 +37,15 @@ export default {
         }
       },
       methods:{
-         changeButton(){
+         changeButton(idd){
+            if (this.realClass==this.selectedClass){
+                this.realClass=this.defaultClass;
+            } else{
             this.realClass=this.selectedClass;
-           this.storex.setNums(this.storex.getNameGroup(), this.storex.getLevel,this.nameID);
+            }
+           //this.storex.setNums(this.storex.getNameGroup(), this.storex.getLevel,this.nameID);
+           this.storex.addTmpNum(idd);
+           console.log(this.storex.getTmpNums());
          }
       },
       mounted(){
@@ -50,6 +56,6 @@ export default {
 </script>
 
 <template>
-  <button :class="realClass" :name="nameID" @click="changeButton()">{{nameValueCP}}</button>
+  <button :class="realClass" :name="nameID" @click="changeButton(nameID)">{{nameValueCP}}</button>
 </template>
 
