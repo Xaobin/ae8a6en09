@@ -17,13 +17,10 @@ export default {
        props:['amount','colls','zero'],  
        computed:{
          amountCP(){
-           // let beginX=-1;
+         
             let arr=[];
             let amountII=this.amount;
-           
-           // if (this.zero==true){
-           //     amountII--;
-           // }
+        
             for (let i = 0; i < amountII; i++) {
                if (this.zero==false){ arr[i]=i+1; }
 				 else{
@@ -35,11 +32,11 @@ export default {
          }
        },
        mounted(){
-        console.log('Component list');
-        console.log('Amount:'+this.amount+' type of:'+(typeof this.amount));
-        console.log('Colls:'+this.colls+' type of:'+(typeof this.colls));
-        console.log('Zero:'+this.zero+' type of:'+(typeof this.zero));
-        console.log(this.amountCP);
+       // console.log('Component list');
+        //console.log('Amount:'+this.amount+' type of:'+(typeof this.amount));
+      //  console.log('Colls:'+this.colls+' type of:'+(typeof this.colls));
+      //  console.log('Zero:'+this.zero+' type of:'+(typeof this.zero));
+      //  console.log(this.amountCP);
       }  
     }
 </script>
@@ -47,7 +44,7 @@ export default {
 <template>
 <div>
  <span v-for="itt,khey in amountCP" :key="khey">
-    <span v-if="(( (itt % (+colls))==0) &&(khey>0) )"><br></span>
+    <span v-if="(( (khey % (+colls))==0) &&(khey>0) )"><br></span>
           <btn :nameID="itt" /> 
 </span>
  </div>

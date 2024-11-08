@@ -25,10 +25,12 @@ export default{
             this.listAmount=this.$refs.inputAmount.value;
             this.listColls=this.$refs.inputColls.value;
             this.listHaveZero=this.$refs.inputCheckZero.checked;
-            if (this.opNums==true){ this.opNums=false; }
-            else{ this.opNums=true; }
+            
             if (this.nameButton=='Open list'){ this.nameButton='Close list'; } 
-            else{ this.nameButton='Open List'; }
+            else{ this.nameButton='Open list'; }
+  
+            this.opNums=(!this.opNums);
+            console.log('Button: '+this.nameButton);
            
          },
          testaCheck(){
@@ -46,8 +48,13 @@ export default{
 </script>
 
 <template>
+ <nav class="navbar-sm navbar-expand-sm bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Lothvi</a>
+  </div>
+</nav> 
 
-<div class="container text-center">
+<div class="container text-center mt-3">
   <div class="row">
           <div class="col-2"></div>
     <div class="col-7">
@@ -72,7 +79,10 @@ export default{
        </div>
 
 
-        <button class="btn btn-sm btn-primary" @click="openListNumbers()">{{nameButton}}</button>
+        <span>
+        <button class="btn btn-sm btn-primary"m  @click="openListNumbers()"
+          :value="nameButton">{{nameButton}}</button>
+        </span>
    
         <span v-if="opNums==true"><list :amount="listAmount" :colls="listColls" :zero="listHaveZero" /></span>
 
