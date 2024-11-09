@@ -45,7 +45,7 @@ export default {
             }
            //this.storex.setNums(this.storex.getNameGroup(), this.storex.getLevel,this.nameID);
            this.storex.addTmpNum(idd);
-           console.log(this.storex.getTmpNums());
+          // console.log(this.storex.getTmpNums());
          }
       },
       mounted(){

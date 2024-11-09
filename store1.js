@@ -7,7 +7,7 @@ export const aStore = defineStore({
         tmpNums: useStorage('tmp', []),
         groupNums: useStorage('nums',{name:0,level:0,vals:[]}),
         config: useStorage('cfg',{realLevel:1,realGroup:1}),
-        general: useStorage('gen',{})
+        general: useStorage('gen',[])
     }),
     actions: {
         addTmpNum(num){
@@ -20,6 +20,9 @@ export const aStore = defineStore({
                 //console.log("Index:"+index);
             if (index > -1) {   this.tmpNums.splice(index, 1); } 
              }
+        },
+        getTmpLength(){
+            return this.tmpNums.length;
         },
         getTmpNums(){
             return this.tmpNums;
@@ -40,29 +43,36 @@ export const aStore = defineStore({
             this.config.realLevel=lv;
         },
         incrementLevel(){
-            let ll=this.config.level;
+            let ll=this.config.realLevel;
             ll++;
-            this.config.level=ll;
+            this.config.realLevel=ll;
         },
         incrementGroup(){
-            let gg=this.config.group;
+            let gg=this.config.realGroup;
             gg++;
-            this.config.group=gg;
+            this.config.realGroup=gg;
         },
         clearConfig(){
-            this.config.realLevel=0;
-            this.config.realGroup='';
+            this.config.realLevel=1;
+            this.config.realGroup=1;
         },    
         closeGroup(){
-            this.addGeneral(this.groupNums);
-            this.clearTmpNums();
-            this.incrementGroup();
             this.groupNums.name=this.getGroup();
             this.groupNums.level=this.getLevel();
             this.groupNums.vals=this.getTmpNums();
+
+            this.addGeneral(this.groupNums);
+
+            this.clearTmpNums();
+            this.incrementGroup();
         },
         addGeneral(itt){
-            this.general[this.getGroup]=itt;
+           //console.log("Real Group:"+this.getGroup());
+           let gg=this.general;
+           let aa=gg.length;
+           aa++;
+           gg[aa]=itt;
+            this.general=gg;
         }
       
        

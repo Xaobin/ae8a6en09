@@ -12,8 +12,8 @@ export default{
             opNums:false,
             opGroup:false,
             nameButton:'Open list',
-            listAmount:0,
-            listColls:0,
+            listAmount:15,
+            listColls:3,
             //listClear:0,
             listHaveZero:false
         }
@@ -78,10 +78,10 @@ export default{
     
         <div class="input-group">
                 <span class="input-group-text" id="">Amount Numbers</span>   
-            <input type="number" class="form-control" id="inputAmount" ref="inputAmount" value="15" >
+            <input type="number" class="form-control" id="inputAmount" ref="inputAmount" :value="listAmount" >
             &nbsp;
                <span class="input-group-text" id="" size="30">Collumns</span>
-            <input type="number" class="form-control" id="inputColls" ref="inputColls" value="3">
+            <input type="number" class="form-control" id="inputColls" ref="inputColls" :value="listColls">
         </div>
    
        
