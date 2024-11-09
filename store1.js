@@ -61,24 +61,30 @@ export const aStore = defineStore({
             this.groupNums.level=this.getLevel();
             this.groupNums.vals=this.getTmpNums();
 
-            this.addGeneral(this.groupNums);
+            this.addGeneral(this.getGroupNums());
 
             this.clearTmpNums();
             this.incrementGroup();
         },
+        getGeneral(){
+            return this.general;
+        },
+        getGroupNums(){
+            return this.groupNums;
+        },
         addGeneral(itt){
            //console.log("Real Group:"+this.getGroup());
-           let gg=this.general;
-           let aa=gg.length;
-           aa++;
-           gg[aa]=itt;
+           let gg=[];
+           gg=this.general;
+            gg.push(itt);
             this.general=gg;
+        },
+        clearGeneral(){
+            this.general=[];
         }
       
        
        
-        //setStatus(response){ this.transact.status=response},
-        //setMsg(response){ this.transact.msg=response},
         
     },
     persist: true

@@ -1,8 +1,9 @@
 <script>
 import { aStore } from '../store/store1'
 import list from './list.vue'
+import ListGroup from './ListGroup.vue'
 export default{
-    components: { list },
+    components: { list,ListGroup },
     setup() {
 	            const storex = aStore();      
 		        return { storex };
@@ -10,6 +11,7 @@ export default{
      data() {
         return {
             opNums:false,
+            //opNumsII:false,
             opGroup:false,
             nameButton:'Open list',
             listAmount:15,
@@ -22,10 +24,13 @@ export default{
         
       },
       methods:{
-         openListNumbers(){
+          initVars(){
             this.listAmount=this.$refs.inputAmount.value;
             this.listColls=this.$refs.inputColls.value;
             this.listHaveZero=this.$refs.inputCheckZero.checked;
+          },  
+         openListNumbers(){
+            this.initVars();
             
             if (this.nameButton=='Open list'){ this.nameButton='Close list'; } 
             else{ this.nameButton='Open list'; }
@@ -34,12 +39,36 @@ export default{
           //  console.log('Button: '+this.nameButton);
            
          },
-         clearList(){
+         clearFunc(){
             //this.listAmount=this.$refs.inputAmount.value;
             //this.listColls=this.$refs.inputColls.value;
-            this.storex.clearTmpNums();
+            //this.storex.clearTmpNums();
+            //this.storex.clearConfig();
+          //  this.storex.clearGeneral();
             //setTimeout(()=>{  this.opNums=false; }, 2000);
-            this.openListNumbers();
+            //this.openListNumbers();
+             this.initVars();
+         },
+         localCloseGroup(){
+           // this.openListNumbers(); 
+           // this.storex.closeGroup();
+            let group =this.storex.getGroup();
+            let level=this.storex.getLevel();
+            let vals =this.storex.getTmpNums();
+            let vv={};
+            vv['name']=group;
+            vv['level']=level;
+            vv['vals']=vals;
+           // this.addGeneral(this.groupNums);
+             let gg=[];
+           gg=this.storex.getGeneral();
+            gg.push(vv);
+            this.storex.general=gg;
+            this.storex.clearTmpNums();
+            this.storex.incrementGroup();
+           // console.log('General:');
+          //  console.log(this.storex.getGeneral());
+          
          }
         
 
@@ -69,7 +98,8 @@ export default{
                  <h6 class="badge bg-secondary">{{vall}}</h6>
             </span>
           </span>
-          
+          <br>
+          <ListGroup />
           </div>
     <div class="col-7">
           
@@ -98,14 +128,15 @@ export default{
           :value="nameButton">{{nameButton}}</button>
         </span>
 
-   
+   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
         <span v-if="opNums==true">
          
-         &nbsp;<button class="btn btn-sm btn-primary"  @click="clearList()">Clear List</button>
+         &nbsp;<button class="btn btn-sm btn-primary"  @click="clearFunc()">Clear </button>
          <br><br>
         <list :amount="listAmount" :colls="listColls" :zero="listHaveZero" />
        
         </span>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
      </div>
         <div class="col-2">
@@ -113,8 +144,8 @@ export default{
             <input type="number" class="form-control" id="inputGroup" ref="inputGroup" :value="storex.getGroup()" disabled >
             &nbsp;
                <span class="input-group-text" id="" size="30">Level</span>
-            <input type="number" class="form-control" id="inputLevel" ref="inputLevel" :value="storex.getLevel()">
-            <button class="btn btn-sm btn-primary"  @click="openListNumbers(); storex.closeGroup();">Close Group</button>
+            <input type="number" class="form-control" id="inputLevel" ref="inputLevel" v-model="storex.config.realLevel">
+            <button class="btn btn-sm btn-primary"  @click="localCloseGroup()">Close Group</button>
         </div>
         
   </div>
