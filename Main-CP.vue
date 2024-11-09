@@ -13,11 +13,11 @@ export default{
             opNums:false,
             //opNumsII:false,
             opGroup:false,
-            nameButton:'Open list',
-            listAmount:15,
-            listColls:3,
+            nameButton:'Close list',
+            listAmount:100,
+            listColls:10,
             //listClear:0,
-            listHaveZero:false
+            listHaveZero:true
         }
       },  
        computed:{
@@ -40,18 +40,11 @@ export default{
            
          },
          clearFunc(){
-            //this.listAmount=this.$refs.inputAmount.value;
-            //this.listColls=this.$refs.inputColls.value;
-            //this.storex.clearTmpNums();
-            //this.storex.clearConfig();
-          //  this.storex.clearGeneral();
-            //setTimeout(()=>{  this.opNums=false; }, 2000);
-            //this.openListNumbers();
-             this.initVars();
+            this.opNums=(!this.opNums);
+            this.storex.clearTmpNums();
          },
          localCloseGroup(){
-           // this.openListNumbers(); 
-           // this.storex.closeGroup();
+
             let group =this.storex.getGroup();
             let level=this.storex.getLevel();
             let vals =this.storex.getTmpNums();
@@ -59,16 +52,21 @@ export default{
             vv['name']=group;
             vv['level']=level;
             vv['vals']=vals;
-           // this.addGeneral(this.groupNums);
+          
              let gg=[];
            gg=this.storex.getGeneral();
             gg.push(vv);
             this.storex.general=gg;
             this.storex.clearTmpNums();
             this.storex.incrementGroup();
-           // console.log('General:');
-          //  console.log(this.storex.getGeneral());
+    
+          this.opNums=(!this.opNums);
           
+         },
+         clearAll(){
+            this.storex.clearTmpNums();
+            this.storex.clearConfig();
+            this.storex.clearGeneral();
          }
         
 
@@ -88,7 +86,8 @@ export default{
   </div>
 </nav> 
 
-<div class="container text-center mt-3">
+<div class="container  mt-3 ml-4">
+ <button class="btn btn-sm btn-primary"  @click="clearAll()">New</button>
   <div class="row">
           <div class="col-2">
 
@@ -108,21 +107,21 @@ export default{
     
         <div class="input-group">
                 <span class="input-group-text" id="">Amount Numbers</span>   
-            <input type="number" class="form-control" id="inputAmount" ref="inputAmount" :value="listAmount" >
+            <input type="number" class="form-control input-sm" id="inputAmount" ref="inputAmount" :value="listAmount" >
             &nbsp;
                <span class="input-group-text" id="" size="30">Collumns</span>
-            <input type="number" class="form-control" id="inputColls" ref="inputColls" :value="listColls">
+            <input type="number" class="form-control input-sm" id="inputColls" ref="inputColls" :value="listColls">
         </div>
    
        
 
         <div class="input-group">
-        <input class="form-check-input" type="checkbox" checked id="inputCheckZero" 
+        <input class="form-check-input input-sm" type="checkbox" checked id="inputCheckZero" 
         ref="inputCheckZero" >
         <label class="form-check-label" for="inputCheckZero">&nbsp;Have Zero</label>
        </div>
 
-
+        <div id='centralBtns' class='text-center'> <!-- begin centralBtns  -->
         <span>
         <button class="btn btn-sm btn-primary"  @click="openListNumbers()"
           :value="nameButton">{{nameButton}}</button>
@@ -137,14 +136,24 @@ export default{
        
         </span>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
+   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+        <span v-if="opNums==false">
+         
+         &nbsp;<button class="btn btn-sm btn-primary"  @click="clearFunc()">Clear </button>
+         <br><br>
+        <list :amount="listAmount" :colls="listColls" :zero="listHaveZero" />
+       
+        </span>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+        </div> <!-- End centralBtns -->
      </div>
         <div class="col-2">
          <span class="input-group-text" id="">Group</span>   
-            <input type="number" class="form-control" id="inputGroup" ref="inputGroup" :value="storex.getGroup()" disabled >
+            <input type="number" class="form-control input-sm" id="inputGroup" ref="inputGroup" :value="storex.getGroup()" disabled >
             &nbsp;
                <span class="input-group-text" id="" size="30">Level</span>
-            <input type="number" class="form-control" id="inputLevel" ref="inputLevel" v-model="storex.config.realLevel">
+            <input type="number" class="form-control input-sm" id="inputLevel" ref="inputLevel" v-model="storex.config.realLevel">
+            <br>
             <button class="btn btn-sm btn-primary"  @click="localCloseGroup()">Close Group</button>
         </div>
         
