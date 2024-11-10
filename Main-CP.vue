@@ -16,6 +16,7 @@ export default{
             nameButton:'Make/Clear list',
             listAmount:100,
             listColls:10,
+            limitValue:50,
             //listClear:0,
             listHaveZero:true
         }
@@ -68,6 +69,8 @@ export default{
             this.storex.clearTmpNums();
             this.storex.clearConfig();
             this.storex.clearGeneral();
+            this.storex.clearLimit();
+            this.opNums=(!this.opNums);
          }
         
 
@@ -115,7 +118,9 @@ export default{
                <span class="" id="">Level</span>
             <input type="number" class="" id="" ref="inputLevel" v-model="storex.config.realLevel">
             <br> <br>
-           
+           <span class="" id="">Limit</span><input type="number" class=""  ref="inputLimit" v-model="limitValue"> 
+            <span v-if="storex.getLimit()<=limitValue">{{storex.getLimit()}}</span>
+            <span v-if="storex.getLimit()>limitValue"><span class='text-warning'>{{storex.getLimit()}}</span></span>
           </small>  
         </div>     
     <div class="col-7">

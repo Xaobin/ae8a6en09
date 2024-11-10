@@ -7,7 +7,8 @@ export const aStore = defineStore({
         tmpNums: useStorage('tmp', []),
         groupNums: useStorage('nums',{name:0,level:0,vals:[]}),
         config: useStorage('cfg',{realLevel:1,realGroup:1}),
-        general: useStorage('gen',[])
+        general: useStorage('gen',[]),
+        limit: useStorage('lim',0)
     }),
     actions: {
         addTmpNum(num){
@@ -15,11 +16,25 @@ export const aStore = defineStore({
                 let aa=this.tmpNums.length;
                 //aa++;
                 this.tmpNums[aa]=num;
+                this.incLimit();
             } 
             else{ const index = this.tmpNums.indexOf(num);
                 //console.log("Index:"+index);
             if (index > -1) {   this.tmpNums.splice(index, 1); } 
+                this.decLimit();
              }
+        },
+        incLimit(){
+            this.limit++;
+        },
+        decLimit(){
+            this.limit--;
+        },
+        clearLimit(){
+            this.limit=0;
+        },
+        getLimit(){
+            return this.limit;
         },
         getTmpLength(){
             return this.tmpNums.length;
@@ -81,7 +96,13 @@ export const aStore = defineStore({
         },
         clearGeneral(){
             this.general=[];
-        }
+        },
+        del1General(num){
+            const index = this.general.indexOf(num);
+                //console.log("Index:"+index);
+            if (index > -1) {   this.general.splice(index, 1); } 
+             
+        },
       
        
        
