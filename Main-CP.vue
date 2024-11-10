@@ -90,44 +90,51 @@ export default{
 <div class="container  mt-3 ml-4">
  <button class="btn btn-sm btn-primary"  @click="clearAll()">New</button><br>
   <div class="row">
-          <div class="col-2">
-            <br>
-          <span v-if="storex.getTmpLength()>0">
-            <mark>Selected numbers:</mark><br>
-            <span v-for="vall in storex.getTmpNums()"> 
-                 <h6 class="badge bg-primary">{{vall}}</h6>
-            </span>
-          </span>
-          <br>
-          <ListGroup />
-          </div>
-    <div class="col-7">
-          
-
-   
-    
-        <span class=""><small>
+     <div class="col-2">
+      <br> <br>
+        <small>
+         <span class="">
                 <span class="" id="">Amount Numbers</span>   
             <input type="number" class="" id="inputAmount" ref="inputAmount" :value="listAmount" >
             &nbsp;
                <span class="" id="">Collumns</span>
             <input type="number" class="" id="inputColls" ref="inputColls" :value="listColls">
-            </small>
+            
         </span>
-   
-       
 
-        <div class=""><small>
+        <div class="">
         <input class="" type="checkbox" checked id="inputCheckZero" 
         ref="inputCheckZero" >
         <label class="" for="inputCheckZero">&nbsp;Have Zero</label>
-        </small>
+        
        </div>
+
+         <span class="" id="">Group</span>   
+            <input type="number" class="" id="" ref="inputGroup" :value="storex.getGroup()" disabled >
+            &nbsp;
+               <span class="" id="">Level</span>
+            <input type="number" class="" id="" ref="inputLevel" v-model="storex.config.realLevel">
+            <br> <br>
+           
+          </small>  
+        </div>     
+    <div class="col-7">
+          
+
+   
+    
+       
+   
+       
+
+       
 
         <div id='centralBtns' class='text-center'> <!-- begin centralBtns  -->
         <span>
         <button class="btn btn-sm btn-primary"  @click="openListNumbers()"
           :value="nameButton">{{nameButton}}</button>
+          &nbsp;&nbsp;
+           <button class="btn btn-sm btn-primary"  @click="localCloseGroup()">Add numbers to group</button>
         </span>
 
    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
@@ -150,17 +157,18 @@ export default{
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
         </div> <!-- End centralBtns -->
      </div>
-        <div class="col-2">
-        <small>
-         <span class="" id="">Group</span>   
-            <input type="number" class="" id="inputGroup" ref="inputGroup" :value="storex.getGroup()" disabled >
-            &nbsp;
-               <span class="" id="" size="30">Level</span>
-            <input type="number" class="" id="inputLevel" ref="inputLevel" v-model="storex.config.realLevel">
-            <br> <br>
-            <button class="btn btn-sm btn-primary"  @click="localCloseGroup()">Add numbers to group</button>
-          </small>  
-        </div>
+     <div class="col-2">
+            <br>
+          <span v-if="storex.getTmpLength()>0">
+            <mark>Selected numbers:</mark><br>
+            <span v-for="vall in storex.getTmpNums()"> 
+                 <h6 class="badge bg-primary">{{vall}}</h6>
+            </span>
+          </span>
+          <br>
+          <ListGroup />
+          </div>
+        
         
   </div>
 </div>
