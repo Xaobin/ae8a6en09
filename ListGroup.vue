@@ -46,19 +46,20 @@ export default {
 <template>
 <div>
 <br>
-<br>
-<br>
 
  <small>
-<mark v-if="storex.general.length>0">Groups:</mark> <br> 
-  <span v-for="itt,khey in storex.getGeneral()" :key="khey">
-      Level: {{itt.level}}<br>
-      Group number: {{itt.name}}<br>
-      Group:<span class="badge bg-primary">{{itt.vals}}</span><br>
-      ___________
-        <br> 
-  </span>
 
+
+<mark v-if="storex.general.length>0">Groups:</mark> <br> 
+    <table class="table">
+    <tbody>
+    <tr v-for="itt,khey in storex.getGeneral()" :key="khey">
+      <td>Level:{{itt.level}}|Group:{{itt.name}}<br>
+      Numbers:<span class="badge bg-primary">{{itt.vals}}</span>
+      </td>
+     </tr> 
+    </tbody>
+    </table>
 </small>
 
 
