@@ -2,8 +2,9 @@
 import { aStore } from '../store/store1'
 import list from './list.vue'
 import ListGroup from './ListGroup.vue'
+import ScaleBet from './ScaleBet.vue'
 export default{
-    components: { list,ListGroup },
+    components: { list,ListGroup,ScaleBet },
     setup() {
 	            const storex = aStore();      
 		        return { storex };
@@ -17,6 +18,7 @@ export default{
             listAmount:100,
             listColls:10,
             limitValue:50,
+            openscale:false,
             //listClear:0,
             listHaveZero:true
         }
@@ -71,10 +73,29 @@ export default{
             this.storex.clearGeneral();
             this.storex.clearLimit();
             this.opNums=(!this.opNums);
-         }
-        
+         },
+         scalCards(){
+             let neogg=[];
+            let len=0;
+            let gg=[]
+            len=this.storex.general.length;
+            if (len>0){
+                gg=this.storex.general;
+            }
+            gg.forEach(jobj => {
+            Object.entries(jobj).forEach(([khey, vall]) => {
 
+            });
+
+            });
+
+        },
+
+
+      /*End Methos */    
       },
+     /*End Methos */      
+
       mounted(){
         //console.log('Component MainCP');
         
@@ -120,7 +141,9 @@ export default{
             <br> <br>
            <span class="" id="">Limit</span><input type="number" class=""  ref="inputLimit" v-model="limitValue"> 
             <span v-if="storex.getLimit()<=limitValue">{{storex.getLimit()}}</span>
-            <span v-if="storex.getLimit()>limitValue"><span class='text-warning'>{{storex.getLimit()}}</span></span>
+            <span v-if="storex.getLimit()>limitValue"><span class='text-warning bg-dark'>{{storex.getLimit()}}</span></span>
+            <br> <br>
+            <button class="btn btn-sm btn-secondary" @click="scalCards()">Scall Cards</button>
           </small>  
         </div>     
     <div class="col-7">
@@ -172,8 +195,9 @@ export default{
           </span>
           <br>
           <ListGroup />
-          </div>
-        
+    </div>
+    <button class='btn btn-sm btn-primary' @click='openscale=!openscale'>Scale Card</button>
+    <span v-show='openscale'><ScaleBet />    </span>
         
   </div>
 </div>
