@@ -13,9 +13,7 @@ export default {
 	            const storex = aStore();      
 		        return { storex };
 	        },
-            data(){
-
-            },
+            data(){ return {} },
       
        computed:{
     

@@ -21,11 +21,11 @@ export default {
 	        },
       data() {
         return {
-        // btnName:'Button',
+        
             realClass:'',
             defaultClass:'btn btn-secondary',
             selectedClass:'btn btn-primary',
-            thirdClass:'btn btn-info'
+            thirdClass:'btn btn-info',
         }
       },
       props:['nameID','nameGroup','nums'],  
@@ -52,7 +52,7 @@ export default {
             let nti=this.nums;
             if (nti.length>0){
                 //console.log('__'+nti);
-                if (nti.includes(this.nameID.toString())){
+                if (nti.includes(this.nameID)){
                     this.storex.addTmpNum(this.nameID);
                     return true;
                 }

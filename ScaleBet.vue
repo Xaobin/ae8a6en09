@@ -8,7 +8,7 @@ __   ___   _  ___
 import { aStore } from '../store/store1'
 
 export default {
-     
+           data(){ return {} },
       setup() {
 	            const storex = aStore();      
 		        return { storex };

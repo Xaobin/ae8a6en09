@@ -87,10 +87,11 @@ export default{
         insertNums(){
             let nums=this.$refs.inputNums.value;
             const mya = nums.split(" ");
-            for (let i=0; i<=mya.length; i++){}
-            this.numsToInsert=mya;
+            let neoa=[];
+            for (let i=0; i<=mya.length; i++){ neoa.push(+mya[i]); }
+            this.numsToInsert=neoa;
               this.opNums=(!this.opNums);
-            console.log(mya);
+            console.log(neoa);
         }
 
       /*End Methos */    

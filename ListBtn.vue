@@ -13,7 +13,7 @@ export default {
 	            const storex = aStore();      
 		        return { storex };
 	        },
-      
+         data(){ return {} },
        props:['amount','colls','zero','nums'],  
        computed:{
          amountCP(){
