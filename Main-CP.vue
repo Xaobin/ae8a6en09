@@ -1,10 +1,10 @@
 <script>
 import { aStore } from '../store/store1'
-import list from './list.vue'
+import ListBtn from './ListBtn.vue'
 import ListGroup from './ListGroup.vue'
 import ScaleBet from './ScaleBet.vue'
 export default{
-    components: { list,ListGroup,ScaleBet },
+    components: { ListBtn,ListGroup,ScaleBet },
     setup() {
 	            const storex = aStore();      
 		        return { storex };
@@ -19,8 +19,10 @@ export default{
             listColls:10,
             limitValue:50,
             openscale:false,
+            scalex:0,
             //listClear:0,
-            listHaveZero:true
+            listHaveZero:true, 
+            numsToInsert:[]
         }
       },  
        computed:{
@@ -64,6 +66,7 @@ export default{
             this.storex.incrementGroup();
     
           this.opNums=(!this.opNums);
+          
           //this.opNums=3;
           
          },
@@ -72,25 +75,23 @@ export default{
             this.storex.clearConfig();
             this.storex.clearGeneral();
             this.storex.clearLimit();
+            this.numsToInsert=[];
             this.opNums=(!this.opNums);
+            this.openscale=false;;
          },
-         scalCards(){
-             let neogg=[];
-            let len=0;
-            let gg=[]
-            len=this.storex.general.length;
-            if (len>0){
-                gg=this.storex.general;
-            }
-            gg.forEach(jobj => {
-            Object.entries(jobj).forEach(([khey, vall]) => {
-
-            });
-
-            });
-
+        
+        scaleCards(){
+            this.openscale=!this.openscale;
+            this.scalex=this.$refs.inputSeq.value;
         },
-
+        insertNums(){
+            let nums=this.$refs.inputNums.value;
+            const mya = nums.split(" ");
+            for (let i=0; i<=mya.length; i++){}
+            this.numsToInsert=mya;
+              this.opNums=(!this.opNums);
+            console.log(mya);
+        }
 
       /*End Methos */    
       },
@@ -112,6 +113,7 @@ export default{
 </nav> 
 
 <div class="container  mt-3 ml-4">
+<!-- left -->
  <button class="btn btn-sm btn-primary"  @click="clearAll()">New</button><br>
   <div class="row">
      <div class="col-2">
@@ -139,13 +141,16 @@ export default{
                <span class="" id="">Level</span>
             <input type="number" class="" id="" ref="inputLevel" v-model="storex.config.realLevel">
             <br> <br>
-           <span class="" id="">Limit</span><input type="number" class=""  ref="inputLimit" v-model="limitValue"> 
+            <span class="" id="">Limit</span><input type="number" class=""  ref="inputLimit" v-model="limitValue"> 
             <span v-if="storex.getLimit()<=limitValue">{{storex.getLimit()}}</span>
             <span v-if="storex.getLimit()>limitValue"><span class='text-warning bg-dark'>{{storex.getLimit()}}</span></span>
+            <input type='text' class='' value='' ref="inputNums" />
+            <button class="btn btn-sm btn-secondary" @click="insertNums()">Insert</button>
             <br> <br>
-            <button class="btn btn-sm btn-secondary" @click="scalCards()">Scall Cards</button>
+           
           </small>  
-        </div>     
+        </div>  
+  <!-- End left -->         
     <div class="col-7">
           
 
@@ -170,7 +175,7 @@ export default{
          
          &nbsp;<!--button class="btn btn-sm btn-primary"  @click="clearFunc()">Clear </button -->
          <br><br>
-        <list :amount="listAmount" :colls="listColls" :zero="listHaveZero" />
+        <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" :nums="numsToInsert" />
        
         </span>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
@@ -179,7 +184,7 @@ export default{
          
          &nbsp;<!--button class="btn btn-sm btn-primary"  @click="clearFunc()">Clear </button -->
          <br><br>
-        <list :amount="listAmount" :colls="listColls" :zero="listHaveZero" />
+        <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" :nums="numsToInsert" />
        
         </span>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
@@ -196,12 +201,22 @@ export default{
           <br>
           <ListGroup />
     </div>
-    <button class='btn btn-sm btn-primary' @click='openscale=!openscale'>Scale Card</button>
-    <span v-show='openscale'><ScaleBet />    </span>
+   
         
   </div>
-</div>
+    
+    
 
+</div>
+<div class="container  mt-3 ml-4">
+    <input type="number" class=""  ref="inputSeq" value="3" @onChange="openscale=false"> 
+    <button class='btn btn-sm btn-primary' @click="scaleCards()">Scale Cards</button>
+    <span v-if="openscale==true">
+        <span v-for="vv in +scalex"> <ScaleBet /></span>
+        <input type='text' class='form-control' value="" />
+    </span>
+     <br><br><br>
+</div>
   
 </template>
 

@@ -50,15 +50,10 @@ export default {
     /* - - - - - - - -  - - - - - - -*/    
         getGroups(){
         /*
-         armazena em cada unidade os números de cada grupo
-        exemplo: neon[0][1] = grupo um, valores: [0,1,2,3,4]
-        neon[1[2] = grupo dois...neon[2][3] = grupo tres...
-        para acessar os valores de um grupo, deve-se somar +1 no primeiro vetor 
-        e repetir o valor atual [] no segundo. Desta forma, fica mais fácil acessar cada 
-        unidade à media que as sequências são obtidas randomicamente unidas
+        
         */
             let neon=[];
-            let aux={};
+           // let aux=[];
             let arr=this.storex.getGeneral();
             if (arr.length>0){
 			Object.entries(arr).forEach( ([kk,vv])=>{
@@ -66,11 +61,11 @@ export default {
                  let yy=vv.vals;
              
                  let xx=vv.name;
-                 aux[xx]=yy;
-             
-                neon.push( aux );
+                 //aux[xx]=yy;
+                neon[xx]=yy;
+                //neon.push( aux );
               
-               aux={};  
+               //aux=[];  
 
 			}); 
             } 
@@ -104,7 +99,7 @@ export default {
            
             rand.forEach(elem=>{
                 
-                final.push(neon[elem-1][elem]);
+                final.push(neon[elem]);
             });
         
           
@@ -123,10 +118,13 @@ export default {
         sequenciaCP(){
             let vv= this.genSequence();
             let str='';
-            vv.forEach(ell=>{
-                str+=" "+ell;
+            let cc=0;
+            vv.forEach(ent=>{
+                if (+ent<10){str+=" 0"+ent; }
+                else{ str+=" "+ent; }
+                cc++;
             });
-            return str;
+            return str+" total:"+cc;
         }
        },
        mounted(){
@@ -139,6 +137,6 @@ export default {
 
  <span><input type='text' class='form-control' :value="sequenciaCP" />
 </span>
-<br><br><br>
+
 </template>
 
