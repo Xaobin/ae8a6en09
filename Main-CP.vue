@@ -86,13 +86,16 @@ export default{
         },
         insertNums(){
             let nums=this.$refs.inputNums.value;
+            nums=nums.trimStart();
+            nums=nums.trimEnd();
             const mya = nums.split(" ");
             let neoa=[];
             for (let i=0; i<=mya.length; i++){ neoa.push(+mya[i]); }
             this.numsToInsert=neoa;
               this.opNums=(!this.opNums);
-            console.log(neoa);
+            //console.log(neoa);
         }
+       
 
       /*End Methos */    
       },
@@ -114,7 +117,8 @@ export default{
 </nav> 
 
 <div class="container  mt-3 ml-4">
-<!-- left -->
+<!-- left --><!-- left -->
+<!-- left --><!-- left -->
  <button class="btn btn-sm btn-primary"  @click="clearAll()">New</button><br>
   <div class="row">
      <div class="col-2">
@@ -145,8 +149,9 @@ export default{
             <span class="" id="">Limit</span><input type="number" class=""  ref="inputLimit" v-model="limitValue"> 
             <span v-if="storex.getLimit()<=limitValue">{{storex.getLimit()}}</span>
             <span v-if="storex.getLimit()>limitValue"><span class='text-warning bg-dark'>{{storex.getLimit()}}</span></span>
-            <input type='text' class='' value='' ref="inputNums" />
-            <button class="btn btn-sm btn-secondary" @click="insertNums()">Insert</button>
+            <input type='text' class='' value='' ref="inputNums" id="inputNums" />
+            <button class="btn btn-sm btn-secondary" @click="insertNums()">Insert</button>&nbsp;
+            <button class="btn btn-sm btn-secondary" @click="this.$refs.inputNums.value=''; ">Clear</button>
             <br> <br>
            
           </small>  
