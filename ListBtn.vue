@@ -43,10 +43,12 @@ export default {
 
 <template>
 <div>
+
  <span v-for="itt,khey in amountCP" :key="khey">
     <span v-if="(( (khey % (+colls))==0) &&(khey>0) )"><br></span>
           <Btn :nameID="itt" :nums="nums" /> 
 </span>
+
  </div>
 </template>
 

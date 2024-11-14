@@ -149,16 +149,17 @@ export default{
             <span class="" id="">Limit</span><input type="number" class=""  ref="inputLimit" v-model="limitValue"> 
             <span v-if="storex.getLimit()<=limitValue">{{storex.getLimit()}}</span>
             <span v-if="storex.getLimit()>limitValue"><span class='text-warning bg-dark'>{{storex.getLimit()}}</span></span>
-            <input type='text' class='' value='' ref="inputNums" id="inputNums" />
+               <input type='text' class='' value='' ref="inputNums" id="inputNums" />
             <button class="btn btn-sm btn-secondary" @click="insertNums()">Insert</button>&nbsp;
             <button class="btn btn-sm btn-secondary" @click="this.$refs.inputNums.value=''; ">Clear</button>
-            <br> <br>
+            <br> <br> 
+           
            
           </small>  
         </div>  
   <!-- End left -->         
-    <div class="col-7">
-          
+    <div class="col">
+         <div class=""> 
 
    
     
@@ -179,7 +180,7 @@ export default{
    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
         <span v-if="opNums==true">
          
-         &nbsp;<!--button class="btn btn-sm btn-primary"  @click="clearFunc()">Clear </button -->
+         &nbsp;
          <br><br>
         <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" :nums="numsToInsert" />
        
@@ -188,14 +189,25 @@ export default{
    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
         <span v-if="opNums==false">
          
-         &nbsp;<!--button class="btn btn-sm btn-primary"  @click="clearFunc()">Clear </button -->
+         &nbsp;
          <br><br>
         <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" :nums="numsToInsert" />
        
         </span>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+       
         </div> <!-- End centralBtns -->
+         <br>
+             <input type="number" class=""  ref="inputSeq" value="3" @onChange="openscale=false"> 
+             <button class='btn btn-sm btn-primary' @click="scaleCards()">Scale Cards</button>
+               <span v-if="openscale==true">
+              <span v-for="vv in +scalex"> <ScaleBet /></span>
+                <input type='text' class='form-control' value="" />
+             </span>
+      </div>
      </div>
+
+
      <div class="col-2">
             <br>
           <span v-if="storex.getTmpLength()>0">
@@ -215,12 +227,7 @@ export default{
 
 </div>
 <div class="container  mt-3 ml-4">
-    <input type="number" class=""  ref="inputSeq" value="3" @onChange="openscale=false"> 
-    <button class='btn btn-sm btn-primary' @click="scaleCards()">Scale Cards</button>
-    <span v-if="openscale==true">
-        <span v-for="vv in +scalex"> <ScaleBet /></span>
-        <input type='text' class='form-control' value="" />
-    </span>
+
      <br><br><br>
 </div>
   

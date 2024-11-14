@@ -134,9 +134,10 @@ export default {
 </script>
 
 <template>
-
- <span><input type='text' class='form-control' :value="sequenciaCP" />
+<small>
+ <span><br>{{sequenciaCP}}
 </span>
+</small>
 
 </template>
 
