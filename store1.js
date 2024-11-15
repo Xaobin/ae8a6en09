@@ -8,9 +8,16 @@ export const aStore = defineStore({
         groupNums: useStorage('nums',{name:0,level:0,vals:[]}),
         config: useStorage('cfg',{realLevel:1,realGroup:1}),
         general: useStorage('gen',[]),
-        limit: useStorage('lim',0)
+        limit: useStorage('lim',0),
+        notes: useStorage('not','')
     }),
     actions: {
+        addNotes(nx){
+            this.notes=nx;
+        },
+        getNotes(){
+            return this.notes;
+        },
         addTmpNum(num){
             if (this.tmpNums.includes(num)==false){
                 let aa=this.tmpNums.length;

@@ -19,6 +19,7 @@ export default{
             listColls:10,
             limitValue:50,
             openscale:false,
+            openNotes:false,
             scalex:0,
             //listClear:0,
             listHaveZero:true, 
@@ -122,39 +123,49 @@ export default{
  <button class="btn btn-sm btn-primary"  @click="clearAll()">New</button><br>
   <div class="row">
      <div class="col-2">
-      <br> <br>
+      <br>
         <small>
-         <span class="">
-                <span class="" id="">Amount Numbers</span>   
-            <input type="number" class="" id="inputAmount" ref="inputAmount" :value="listAmount" >
-            &nbsp;
-               <span class="" id="">Collumns</span>
-            <input type="number" class="" id="inputColls" ref="inputColls" :value="listColls">
-            
-        </span>
+                        <p>Amount  
+            <input type="number" class="" id="inputAmount" ref="inputAmount" :value="listAmount" size="4">
+                         </p> 
+         
+                    <p>Collumns
+            <input type="number" class="" id="inputColls" ref="inputColls" :value="listColls" size="4">
+                    </p>
+           
+        
 
-        <div class="">
+                    <p class="">
         <input class="" type="checkbox" checked id="inputCheckZero" 
         ref="inputCheckZero" >
         <label class="" for="inputCheckZero">&nbsp;Have Zero</label>
-        
-       </div>
+        <br>
+                    </p>
 
-         <span class="" id="">Group</span>   
-            <input type="number" class="" id="" ref="inputGroup" :value="storex.getGroup()" disabled >
-            &nbsp;
-               <span class="" id="">Level</span>
-            <input type="number" class="" id="" ref="inputLevel" v-model="storex.config.realLevel">
-            <br> <br>
-            <span class="" id="">Limit</span><input type="number" class=""  ref="inputLimit" v-model="limitValue"> 
+                  <p>Group
+            <input type="number" class="" id="" ref="inputGroup" :value="storex.getGroup()" disabled  size="4">
+                 </p> 
+                  <p class="" id="">Level
+            <input type="number" class="" id="" ref="inputLevel" v-model="storex.config.realLevel" size="4">
+                  </p>
+                  <p class="" id="">Limit
+            <input type="number" class=""  ref="inputLimit" v-model="limitValue" size="4"> 
             <span v-if="storex.getLimit()<=limitValue">{{storex.getLimit()}}</span>
             <span v-if="storex.getLimit()>limitValue"><span class='text-warning bg-dark'>{{storex.getLimit()}}</span></span>
-               <input type='text' class='' value='' ref="inputNums" id="inputNums" />
+                  </p>
+                   <p>  
+            <input type='text' class='' value='' ref="inputNums" id="inputNums" />
             <button class="btn btn-sm btn-secondary" @click="insertNums()">Insert</button>&nbsp;
             <button class="btn btn-sm btn-secondary" @click="this.$refs.inputNums.value=''; ">Clear</button>
-            <br> <br> 
-           
-           
+                </p>
+             <br> 
+            <input type="number" class=""  ref="inputSeq" value="3" @onChange="openscale=false" size="4"> 
+             &nbsp;<button class='btn btn-sm btn-secondary' @click="scaleCards()">Scale Cards</button>
+            <br>  <br>  <br>
+             <p>
+              <button class='btn btn-sm btn-primary' @click="openNotes=!openNotes">Notes</button>
+             </p> 
+             
           </small>  
         </div>  
   <!-- End left -->         
@@ -198,12 +209,14 @@ export default{
        
         </div> <!-- End centralBtns -->
          <br>
-             <input type="number" class=""  ref="inputSeq" value="3" @onChange="openscale=false"> 
-             <button class='btn btn-sm btn-primary' @click="scaleCards()">Scale Cards</button>
+            
                <span v-if="openscale==true">
               <span v-for="vv in +scalex"> <ScaleBet /></span>
-                <input type='text' class='form-control' value="" />
              </span>
+             <p v-if="openNotes==true"> 
+                <textarea class='form-control' :value="storex.getNotes()" ref="inputNotes"> </textarea> 
+                 <button class='btn btn-sm btn-primary' @click="storex.addNotes(this.$refs.inputNotes.value);">Save</button>
+             </p>
       </div>
      </div>
 
