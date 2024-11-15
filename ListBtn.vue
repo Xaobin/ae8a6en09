@@ -14,7 +14,7 @@ export default {
 		        return { storex };
 	        },
          data(){ return {} },
-       props:['amount','colls','zero','nums'],  
+       props:['amount','colls','zero','nums','toselect','selcolor'],  
        computed:{
          amountCP(){
          
@@ -46,7 +46,7 @@ export default {
 
  <span v-for="itt,khey in amountCP" :key="khey">
     <span v-if="(( (khey % (+colls))==0) &&(khey>0) )"><br></span>
-          <Btn :nameID="itt" :nums="nums" /> 
+          <Btn :nameID="itt" :nums="nums" :toselect="toselect" :selcolor="selcolor" /> 
 </span>
 
  </div>

@@ -23,7 +23,9 @@ export default{
             scalex:0,
             //listClear:0,
             listHaveZero:true, 
-            numsToInsert:[]
+            numsToInsert:[],
+            selColor:'primary',
+            toSelect:true
         }
       },  
        computed:{
@@ -34,6 +36,7 @@ export default{
             this.listAmount=this.$refs.inputAmount.value;
             this.listColls=this.$refs.inputColls.value;
             this.listHaveZero=this.$refs.inputCheckZero.checked;
+            this.toSelect=this.$refs.inputCheckSel.checked;
           },  
          openListNumbers(){
             this.initVars();
@@ -96,6 +99,7 @@ export default{
               this.opNums=(!this.opNums);
             //console.log(neoa);
         }
+    
        
 
       /*End Methos */    
@@ -182,10 +186,23 @@ export default{
 
         <div id='centralBtns' class='text-center'> <!-- begin centralBtns  -->
         <span>
-        <button class="btn btn-sm btn-primary"  @click="openListNumbers()"
+        <button class="badge bg-primary"  @click="openListNumbers()"
           :value="nameButton">{{nameButton}}</button>
-          &nbsp;&nbsp;
-           <button class="btn btn-sm btn-primary"  @click="localCloseGroup()">Add numbers to group</button>
+          &nbsp;
+           <button class="badge bg-primary"  @click="localCloseGroup()">Add numbers to group</button>
+            &nbsp;
+             <small>
+                <input class="" type="checkbox" checked id="inputCheckSel" 
+                ref="inputCheckSel" @change=" this.toSelect=this.$refs.inputCheckSel.checked;">
+                <label class="" for="inputCheckSel">&nbsp;To Select</label>
+                 &nbsp;
+                  <select class="form-select-sm" id="selectColor" ref="selectColor" @change="this.selColor=this.$refs.selectColor.value;">
+                    <option value="primary">Blue</option>
+                    <option value="info">Info</option>
+                    <option value="warning">Yellow</option>
+                    
+                   </select> 
+            </small>
         </span>
 
    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
@@ -193,7 +210,8 @@ export default{
          
          &nbsp;
          <br><br>
-        <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" :nums="numsToInsert" />
+        <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" 
+        :nums="numsToInsert" :toselect="toSelect" :selcolor="selColor" />
        
         </span>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
@@ -202,7 +220,8 @@ export default{
          
          &nbsp;
          <br><br>
-        <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" :nums="numsToInsert" />
+        <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" 
+        :nums="numsToInsert" :toselect="toSelect" :selcolor="selColor" />
        
         </span>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->

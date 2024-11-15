@@ -39,7 +39,7 @@ export default {
     <tbody>
     <tr v-for="itt,khey in storex.getGeneral()" :key="khey">
       <td>Level:{{itt.level}}|Group:{{itt.name}}<br>
-      <span class="badge bg-primary">{{itt.vals}}</span>
+      <span v-for="jj in itt.vals" class="badge bg-primary">{{jj}}</span>
       <br><button class="badge bg-warning text-dark" @click="storex.del1General(itt)">Del</button>
       </td>
      </tr> 
