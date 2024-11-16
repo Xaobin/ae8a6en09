@@ -13,7 +13,7 @@ export default {
 	            const storex = aStore();      
 		        return { storex };
 	        },
-         data(){ return {} },
+         data(){ return { numsII:[] } },
        props:['amount','colls','zero','nums','toselect','selcolor'],  
        computed:{
          amountCP(){
@@ -30,8 +30,21 @@ export default {
             
             return arr;
          }
+        
+            
        },
+       
        mounted(){
+        
+           // this.numsII=this.preNums;
+            //this.nums=this.preNums;
+       
+      //  let rr='';
+       // this.numsII.forEach(ii=>{
+     //       rr+=" "+ii;
+     //   });
+     //   console.log(rr);
+     //   console.log(this.numsII);
        // console.log('Component list');
         //console.log('Amount:'+this.amount+' type of:'+(typeof this.amount));
       //  console.log('Colls:'+this.colls+' type of:'+(typeof this.colls));

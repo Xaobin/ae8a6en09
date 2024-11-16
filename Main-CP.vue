@@ -94,11 +94,32 @@ export default{
             nums=nums.trimEnd();
             const mya = nums.split(" ");
             let neoa=[];
-            for (let i=0; i<=mya.length; i++){ neoa.push(+mya[i]); }
-            this.numsToInsert=neoa;
+            mya.forEach(mi=>{
+                neoa.push(mi);
+            });
+            ///for (let i=0; i<=mya.length; i++){ neoa.push(+mya[i]); }
+           // this.numsToInsert=neoa;
+           this.numsToInsert=this.preNums(neoa);
               this.opNums=(!this.opNums);
             //console.log(neoa);
-        }
+        },
+         preNums(nar){
+            let neoarr=[];
+            if (nar.length>0){
+                let arr=nar;
+                //let len=this.nums.length;
+                let i=0;
+                arr.forEach(tt=>{
+                    if (neoarr.includes(+tt)==false){
+                        if (tt!=''){
+                            neoarr[i]=+tt;
+                            i++;
+                        }
+                    }
+                });
+                }
+                 return neoarr;
+            }
     
        
 

@@ -40,7 +40,9 @@ export default {
       },
       methods:{
          insertNum(nuu){
+            //console.log(typeof nuu);
             if (this.toselect==true){
+                
                 this.storex.addTmpNum(nuu);
             }
          },
@@ -68,9 +70,10 @@ export default {
         verifyNumsToInsert(){
             let nti=this.nums;
             if (nti.length>0){
-                //console.log('__'+nti);
-                if (nti.includes(this.nameID)){
-                    this.insertNum(this.nameID);
+                console.log('_w1_');
+                if (nti.includes( +(this.nameID) ) ){
+                    console.log('>'+this.nameID);
+                    this.insertNum(+(this.nameID));
                     return true;
                 }
             }
@@ -80,7 +83,7 @@ export default {
       mounted(){
         this.realClass=this.defaultClass;
         if (this.verifyNumsToInsert()){ this.realClass=this.partClass+this.selcolor; }
-        
+        //if (this.nums.length>0){ console.log('_'+this.nums); }
       }
     }
 </script>
