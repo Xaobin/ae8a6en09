@@ -3,6 +3,9 @@ import { aStore } from '../store/store1'
 import ListBtn from './ListBtn.vue'
 import ListGroup from './ListGroup.vue'
 import ScaleBet from './ScaleBet.vue'
+import aData from '../store/fdata.json'
+  
+
 export default{
     components: { ListBtn,ListGroup,ScaleBet },
     setup() {
@@ -25,7 +28,9 @@ export default{
             listHaveZero:true, 
             numsToInsert:[],
             selColor:'primary',
-            toSelect:true
+            toSelect:true,
+            openTable:false,
+            slate: aData
         }
       },  
        computed:{
@@ -88,6 +93,9 @@ export default{
             this.openscale=!this.openscale;
             this.scalex=this.$refs.inputSeq.value;
         },
+        /*
+        Transform this "10 11 12" in 10,11,12 without repeat
+        */
         insertNums(){
             let nums=this.$refs.inputNums.value;
             nums=nums.trimStart();
@@ -103,6 +111,26 @@ export default{
               this.opNums=(!this.opNums);
             //console.log(neoa);
         },
+        insertLot(){
+                let idd=this.$refs.inputIdLot.value;
+                let vals=this.$refs.inputValsLot.value;
+                let myOb={"id":idd,"vals":vals};
+                let neoF= this.storex.getSlate();
+                if ((idd!='')&&(vals!='')&&(vals.length>3)){
+                    neoF.push(myOb);
+
+                    this.storex.setSlate(neoF);
+                
+                    this.$refs.inputIdLot.value='';
+                    this.$refs.inputValsLot.value='';
+                    this.slate=this.storex.getSlate();
+                }
+
+        },
+        /*
+        Return a sequence without repeats
+        ex: 10,11,11,12 return 10,11,12
+        */
          preNums(nar){
             let neoarr=[];
             if (nar.length>0){
@@ -119,6 +147,10 @@ export default{
                 });
                 }
                  return neoarr;
+            },
+            putVals(val){
+                let vy=this.$refs.inputNums.value;
+                this.$refs.inputNums.value=vy+" "+val;
             }
     
        
@@ -128,7 +160,11 @@ export default{
      /*End Methos */      
 
       mounted(){
-        //console.log('Component MainCP');
+        if (this.storex.getSlateLength()<=0){
+            this.storex.setSlate(this.slate);
+        } else{
+            this.slate=this.storex.getSlate();
+        }
         
       }     
       //      
@@ -180,15 +216,18 @@ export default{
                   </p>
                    <p>  
             <input type='text' class='' value='' ref="inputNums" id="inputNums" />
-            <button class="btn btn-sm btn-secondary" @click="insertNums()">Insert</button>&nbsp;
-            <button class="btn btn-sm btn-secondary" @click="this.$refs.inputNums.value=''; ">Clear</button>
+            <button class="badge bg-secondary" @click="insertNums()">Insert</button>&nbsp;
+            <button class="badge bg-secondary" @click="this.$refs.inputNums.value=''; ">Clear</button>
                 </p>
              <br> 
             <input type="number" class=""  ref="inputSeq" value="3" @onChange="openscale=false" size="4"> 
-             &nbsp;<button class='btn btn-sm btn-secondary' @click="scaleCards()">Scale Cards</button>
+             &nbsp;<button class='badge bg-secondary' @click="scaleCards()">Scale Cards</button>
             <br>  <br>  <br>
              <p>
-              <button class='btn btn-sm btn-primary' @click="openNotes=!openNotes">Notes</button>
+              <button class='badge bg-secondary' @click="openNotes=!openNotes">Notes</button>
+             </p> 
+               <p>
+              <button class='badge bg-secondary' @click="openTable=!openTable">Table</button>
              </p> 
              
           </small>  
@@ -221,7 +260,10 @@ export default{
                     <option value="primary">Blue</option>
                     <option value="info">Info</option>
                     <option value="warning">Yellow</option>
-                    
+                    <option value="light">White</option>
+                    <option value="dark">Dark</option>
+                    <option value="success">Green</option>
+                    <option value="danger">Red</option>
                    </select> 
             </small>
         </span>
@@ -255,7 +297,16 @@ export default{
              </span>
              <p v-if="openNotes==true"> 
                 <textarea class='form-control' :value="storex.getNotes()" ref="inputNotes"> </textarea> 
-                 <button class='btn btn-sm btn-primary' @click="storex.addNotes(this.$refs.inputNotes.value);">Save</button>
+                 <button class='badge bg-primary' @click="storex.addNotes(this.$refs.inputNotes.value);">Save</button>
+             </p>
+             <p v-if="openTable==true">
+                <p v-for="ity in slate">
+                   {{ity.id}} - {{ity.vals}} <button class="badge bg-secondary" 
+                   @click="putVals(ity.vals)">[I]</button>
+                </p>
+                <input type="text" size="4" ref="inputIdLot" placeholder="ID">                
+                <input type="text" size="20" ref="inputValsLot" placeholder="Numbers to add">
+                <button class="badge bg-primary" @click="insertLot()">Add</button>
              </p>
       </div>
      </div>

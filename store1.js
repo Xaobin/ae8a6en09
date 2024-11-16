@@ -9,9 +9,22 @@ export const aStore = defineStore({
         config: useStorage('cfg',{realLevel:1,realGroup:1}),
         general: useStorage('gen',[]),
         limit: useStorage('lim',0),
-        notes: useStorage('not','')
+        notes: useStorage('not',''),
+        slate: useStorage('sla',[])
     }),
     actions: {
+        setSlate(sll){
+            this.slate=sll;
+        },
+        addSlate(sll){
+            this.slate.push(sll);
+        },
+        getSlate(){
+            return this.slate;
+        },
+        getSlateLength(){
+            return this.slate.length;
+        },
         addNotes(nx){
             this.notes=nx;
         },
@@ -19,6 +32,7 @@ export const aStore = defineStore({
             return this.notes;
         },
         addTmpNum(num){
+            
             if (this.tmpNums.includes(num)==false){
                 let aa=this.tmpNums.length;
                 //aa++;
