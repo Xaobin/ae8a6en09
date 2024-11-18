@@ -1,124 +1,115 @@
 <?php
- class BaseJson{
-    function getValueJsonApi($di){
-        $ch = curl_init();
-        ///'ultimo'  
-        $urlx="https://api.guidi.dev.br/loteria/lotomania/".$di;
-        
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, $urlx);
-        $result = curl_exec($ch);
-        curl_close($ch);
+include 'BaseJson.php';
+$b= new BaseJson();
+$list=[];
+$inputID="";
+$responseID="";
+$responseVals="";
+$inputBeginEnd="";
+$formApi='false';
+$sendApi='false';
+$dellist='false';
+if (isset($_POST['inputBeginEnd']) ){ $inputBeginEnd=$_POST['inputBeginEnd']; }
 
-        $obj = json_decode($result);
-        return $obj;
-    }
-    function getFileName(){
-        $dr=$_SERVER['DOCUMENT_ROOT'];
-        $part="\\src\\store\\";
-        $doc="fdata.json";
-        return $dr.$part.$doc;
-    }
-    function getLocalJson(){
-        $dr=$this->getFileName();
-        $val = file_get_contents($dr);
-        return json_decode($val);
-    }
-    function toFormatObject($uma){
-        $v=$this->getValueJsonApi($uma);
-        $arr=[];
-        $conc=0;
-        foreach ($v as $ke=>$va){
-        // echo "<br>";
-            //echo var_dump($va);
-            if ($ke=='listaDezenas'){
-            // echo "Array:<br>";
-                //echo var_dump($va);
-                $arr=$va;
-                //$peg=true;
-            }
-            if ($ke=='numero'){
-            $conc=$va;
-            }
-        }
-        $lis="";
-        foreach ($arr as $vi){
-            $lis.=" ".$vi;
-        }
-        $lis=ltrim($lis);
-       // $um="{\"id\":\"$conc\",\"vals\":\"$lis\"}";
-        $um=(object)["id"=>$conc,"vals"=>$lis];
-      
-        return $um;
-    }
-    function listLocalJson(){
-        $arr=$this->getLocalJson();
-        $lis=" ";
-        foreach ($arr as $ke=>$va){
-            //echo "<br>..".var_dump($va);
-           
-            $lis.=" id:".$va->id;
-             $lis.=" vals:".$va->vals."<br>"; 
-        }    
-        return $lis;
-    }
-    function setLocalJson($fill){
-        $endr=$this->getFileName();
-        $str=json_encode($fill);
-        file_put_contents($endr,$str);
-    }
-    function insertLocalJson($myob,$pos='begin'){
-        $v=$this->getLocalJson();
-        if ($pos=='end'){ array_push($v,$myob); }
-        if ($pos=='begin'){ array_unshift($v,$myob); }
-        $this->setLocalJson($v);
-        return $this->getLocalJson();
-    }
-    function del1ElemlocalJson($pos='begin'){
-        $v=$this->getLocalJson();
-        if ($pos=='begin'){ array_shift($v); }
-        if ($pos=='end'){ array_pop($v); }
-        $this->setLocalJson($v);
-        return $this->getLocalJson();
-    }
+if (isset($_POST['responseID'])){ $responseID=$_POST['responseID']; }
 
+if (isset($_POST['inputID'])){ $inputID=$_POST['inputID']; }
+
+if (isset($_POST['responseVals'])){ $responseVals=$_POST['responseVals']; }
+
+if (isset($_POST['formApi'])){ $formApi=$_POST['formApi']; }
+
+if (isset($_POST['sendApi'])){ $sendApi=$_POST['sendApi']; }
+
+if (isset($_POST['dellist'])){ $dellist=$_POST['dellist']; }
+
+if ($formApi=='true'){
+    $object=$b->toFormatObject($inputID);
+    //$str.="id:".$object->id." Vals:".$object->vals;
+    if ($object!=null) {    $responseID=$object->id; $responseVals=$object->vals; }
+    //$formApi='false';
 }
-    
+if($sendApi=='true'){
+    $object=$b->toFormatII($responseID,$responseVals);
+    $list=$b->insertLocalJson($object,$inputBeginEnd,'list');
+    $sendApi==false;
+} else{
+    $list=$b->listLocalJson();
+}
+if ($dellist=='true'){
+    $list=$b->del1ElemlocalJson($inputBeginEnd,'list');
+    $dellist='false';
+}
 
-$b=new BaseJson();
-//$d="{\"id\":\"2699\",\"vals\":\"\"}";
-/*
-$vals="01 16 20 25 29 34 35 36 51 56 59 60 62 63 66 72 85 86 87 90";
-$id="2703";
-$object =(object) [ "id" => $id,"vals" => $vals ];
-*/
-//echo var_dump($object);
 
-$v=$b->listLocalJson();
-echo $v;
-//echo print_r($v);
-//$v=$b->toFormatObject('ultimo'); ///ok
-//array_unshift($arr,$put) -> put on beginning
-//array_shift($arr) -> remove on elem from beginning of array
-//array_push -> put in end of array
-//array_pop -> pop the element off the end of array
-//echo var_dump($v);
-//    /*
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Lothvi Base</title>
+    <!-- Link para o CSS do Bootstrap mais recente -->
+    <!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+</head>
+<body>
 
-//       */   
-//echo $v;
-/*
-[
-    {"id":"2699","vals":"01 16 20 25 29 34 35 36 51 56 59 60 62 63 66 72 85 86 87 90"},
-    {"id":"2698","vals":"00 02 07 15 19 24 28 32 34 37 50 51 55 59 69 73 74 87 89 94"},
-    {"id":"2697","vals":"06 10 15 22 24 29 30 36 42 45 46 51 54 55 59 62 63 72 79 92"},
-    {"id":"2696","vals":"08 17 31 38 39 43 44 47 49 51 59 61 62 63 66 81 82 93 97 98"},
-    {"id":"2695","vals":"06 19 26 30 32 37 41 52 53 57 60 63 65 75 81 83 85 90 92 94"},
-    {"id":"2694","vals":"02 11 15 21 22 26 28 29 30 33 35 44 49 53 61 67 79 81 87 91"},
-    {"id":"2693","vals":"01 09 10 11 19 24 28 36 39 40 42 53 54 61 75 78 85 92 93 98"}
-]
+<nav class="navbar-sm navbar-expand-sm bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Lothvi Base Config</a>
+  </div>
+</nav> 
 
-*/
+<div class="container  mt-3 ml-4">
+    <div class="row">
+             <div class="col-2"></div>
+             <div class="col"><!-- Content -->
+
+                Values Listed:
+                <textarea class="form-control" rows="10" style="heigth:50%"><?php echo $list; ?></textarea>
+                <hr>
+                <form action="index2.php" method="POST"><input type="text" name="inputID" 
+                value="<?php echo $inputID;  ?>" 
+                placeholder="ultimo, 2000">
+                <input type='hidden' value='true' name='formApi'>
+                <input type="submit" value="Search Value" class="btn btn-sm btn-secondary">
+
+                </form>
+                <hr>
+                <form action="index2.php" method="POST">
+                    <?php if (($formApi=='true')&&($responseID!="")){
+                            echo $responseID." - ".$responseVals;
+                            echo "<br><br>Begin or end of the list";
+                            echo "<br><input type='radio' name='inputBeginEnd' value='begin'>Begin
+                            <input type='radio' name='inputBeginEnd' value='end'>End";
+                            echo "<input type='hidden' value='$responseID' name='responseID'>";
+                            echo "<input type='hidden' value='$responseVals' name='responseVals'>";
+                            echo "<input type='hidden' value='true' name='sendApi'>";
+                            echo "&nbsp;<input type='submit' class='btn btn-sm btn-secondary' value='Add Value'>";
+                    } ?>
+                </form>
+                <hr><hr>
+                <form action="index2.php" method="POST">
+                Delete one element from list
+                        <br><input type='radio' name='inputBeginEnd' value='begin'>Begin
+                            <input type='radio' name='inputBeginEnd' value='end'>End
+                            
+                            <input type='hidden' value="true" name="dellist">
+                             &nbsp;<input type='submit' class='btn btn-sm btn-secondary' value='Del'>
+                </form>
+                <hr>    
+            </div><!-- End Content -->    
+    </div>    
+</div>
+
+
+
+
+
+</body>
+</html>
+<?php
+
 
 ?>
