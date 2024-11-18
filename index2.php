@@ -1,6 +1,6 @@
 <?php
  class BaseJson{
-    function getValueJson($di){
+    function getValueJsonApi($di){
         $ch = curl_init();
         ///'ultimo'  
         $urlx="https://api.guidi.dev.br/loteria/lotomania/".$di;
@@ -14,14 +14,19 @@
         $obj = json_decode($result);
         return $obj;
     }
-    function getLocalJson(){
+    function getFileName(){
         $dr=$_SERVER['DOCUMENT_ROOT'];
+        $part="\\src\\store\\";
         $doc="fdata.json";
-        $val = file_get_contents($dr."\\src\\store\\".$doc);
-        return $val;
+        return $dr.$part.$doc;
     }
-    function transUma($uma){
-        $v=$this->getValueJson($uma);
+    function getLocalJson(){
+        $dr=$this->getFileName();
+        $val = file_get_contents($dr);
+        return json_decode($val);
+    }
+    function toFormatObject($uma){
+        $v=$this->getValueJsonApi($uma);
         $arr=[];
         $conc=0;
         foreach ($v as $ke=>$va){
@@ -41,24 +46,79 @@
         foreach ($arr as $vi){
             $lis.=" ".$vi;
         }
-        $um="{\"id\":\"$conc\",\"vals\":\"$lis\"}";
-
+        $lis=ltrim($lis);
+       // $um="{\"id\":\"$conc\",\"vals\":\"$lis\"}";
+        $um=(object)["id"=>$conc,"vals"=>$lis];
+      
         return $um;
-
-
     }
+    function listLocalJson(){
+        $arr=$this->getLocalJson();
+        $lis=" ";
+        foreach ($arr as $ke=>$va){
+            //echo "<br>..".var_dump($va);
+           
+            $lis.=" id:".$va->id;
+             $lis.=" vals:".$va->vals."<br>"; 
+        }    
+        return $lis;
+    }
+    function setLocalJson($fill){
+        $endr=$this->getFileName();
+        $str=json_encode($fill);
+        file_put_contents($endr,$str);
+    }
+    function insertLocalJson($myob,$pos='begin'){
+        $v=$this->getLocalJson();
+        if ($pos=='end'){ array_push($v,$myob); }
+        if ($pos=='begin'){ array_unshift($v,$myob); }
+        $this->setLocalJson($v);
+        return $this->getLocalJson();
+    }
+    function del1ElemlocalJson($pos='begin'){
+        $v=$this->getLocalJson();
+        if ($pos=='begin'){ array_shift($v); }
+        if ($pos=='end'){ array_pop($v); }
+        $this->setLocalJson($v);
+        return $this->getLocalJson();
+    }
+
 }
     
 
 $b=new BaseJson();
-//$v=$b->getLocalJson();
-//$v=$b->transUma('ultimo'); ///ok
-
-
-///echo $v;
+//$d="{\"id\":\"2699\",\"vals\":\"\"}";
 /*
-$arr=array(20)=> { [0]=> string(2) "01" [1]=> string(2) "16" [2]=> string(2) "20" [3]=> string(2) "25" [4]=> string(2) "29" [5]=> string(2) "34" [6]=> string(2) "35" [7]=> string(2) "36" [8]=> string(2) "51" [9]=> string(2) "56" [10]=> string(2) "59" [11]=> string(2) "60" [12]=> string(2) "62" [13]=> string(2) "63" [14]=> string(2) "66" [15]=> string(2) "72" [16]=> string(2) "85" [17]=> string(2) "86" [18]=> string(2) "87" [19]=> string(2) "90" };
+$vals="01 16 20 25 29 34 35 36 51 56 59 60 62 63 66 72 85 86 87 90";
+$id="2703";
+$object =(object) [ "id" => $id,"vals" => $vals ];
 */
+//echo var_dump($object);
 
+$v=$b->listLocalJson();
+echo $v;
+//echo print_r($v);
+//$v=$b->toFormatObject('ultimo'); ///ok
+//array_unshift($arr,$put) -> put on beginning
+//array_shift($arr) -> remove on elem from beginning of array
+//array_push -> put in end of array
+//array_pop -> pop the element off the end of array
+//echo var_dump($v);
+//    /*
+
+//       */   
+//echo $v;
+/*
+[
+    {"id":"2699","vals":"01 16 20 25 29 34 35 36 51 56 59 60 62 63 66 72 85 86 87 90"},
+    {"id":"2698","vals":"00 02 07 15 19 24 28 32 34 37 50 51 55 59 69 73 74 87 89 94"},
+    {"id":"2697","vals":"06 10 15 22 24 29 30 36 42 45 46 51 54 55 59 62 63 72 79 92"},
+    {"id":"2696","vals":"08 17 31 38 39 43 44 47 49 51 59 61 62 63 66 81 82 93 97 98"},
+    {"id":"2695","vals":"06 19 26 30 32 37 41 52 53 57 60 63 65 75 81 83 85 90 92 94"},
+    {"id":"2694","vals":"02 11 15 21 22 26 28 29 30 33 35 44 49 53 61 67 79 81 87 91"},
+    {"id":"2693","vals":"01 09 10 11 19 24 28 36 39 40 42 53 54 61 75 78 85 92 93 98"}
+]
+
+*/
 
 ?>
