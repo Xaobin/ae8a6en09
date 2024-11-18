@@ -3,7 +3,7 @@ import { aStore } from '../store/store1'
 import ListBtn from './ListBtn.vue'
 import ListGroup from './ListGroup.vue'
 import ScaleBet from './ScaleBet.vue'
-import aData from '../store/fdata.json'
+import aData from '../assets/base/fdata.json'
   
 
 export default{
@@ -123,7 +123,7 @@ export default{
                 
                     this.$refs.inputIdLot.value='';
                     this.$refs.inputValsLot.value='';
-                    this.slate=this.storex.getSlate();
+                    //this.slate=this.storex.getSlate();
                 }
 
         },
@@ -151,6 +151,12 @@ export default{
             putVals(val){
                 let vy=this.$refs.inputNums.value;
                 this.$refs.inputNums.value=vy+" "+val;
+            },
+            copyV(vi){
+                navigator.clipboard.writeText(vi);
+            },
+            openTab(){
+                this.openTable=!this.openTable;
             }
     
        
@@ -160,11 +166,11 @@ export default{
      /*End Methos */      
 
       mounted(){
-        if (this.storex.getSlateLength()<=0){
-            this.storex.setSlate(this.slate);
-        } else{
+        //if (this.storex.getSlateLength()<=0){
+           // this.storex.setSlate(this.slate);
+       // } else{
             this.slate=this.storex.getSlate();
-        }
+       // }
         
       }     
       //      
@@ -227,7 +233,8 @@ export default{
               <button class='badge bg-secondary' @click="openNotes=!openNotes">Notes</button>
              </p> 
                <p>
-              <button class='badge bg-secondary' @click="openTable=!openTable">Table</button>
+              <button class='badge bg-secondary' @click="openTab()">Open Table</button>
+            
              </p> 
              
           </small>  
@@ -291,7 +298,7 @@ export default{
        
         </div> <!-- End centralBtns -->
          <br>
-            
+            <small>
                <span v-if="openscale==true">
               <span v-for="vv in +scalex"> <ScaleBet /></span>
              </span>
@@ -302,12 +309,14 @@ export default{
              <p v-if="openTable==true">
                 <p v-for="ity in slate">
                    {{ity.id}} - {{ity.vals}} <button class="badge bg-secondary" 
-                   @click="putVals(ity.vals)">[I]</button>
+                   @click="putVals(ity.vals)">[I]</button>&nbsp;
+                   <button class="badge bg-secondary" @click="copyV(ity.vals)">Cp</button>
                 </p>
-                <input type="text" size="4" ref="inputIdLot" placeholder="ID">                
+                <!--input type="text" size="4" ref="inputIdLot" placeholder="ID">                
                 <input type="text" size="20" ref="inputValsLot" placeholder="Numbers to add">
-                <button class="badge bg-primary" @click="insertLot()">Add</button>
-             </p>
+                <button class="badge bg-primary" @click="insertLot()">Add</button -->
+                </p>
+             </small>   
       </div>
      </div>
 

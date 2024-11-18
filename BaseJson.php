@@ -21,8 +21,8 @@
         
     }
     function getFileName(){
-        $dr=$_SERVER['DOCUMENT_ROOT'];
-        $part="\\src\\store\\";
+        $dr=""; //$_SERVER['DOCUMENT_ROOT'];
+        $part="";
         $doc="fdata.json";
         return $dr.$part.$doc;
     }
@@ -74,6 +74,20 @@
             $lis.=" id:".$va->id;
              $lis.=" vals:".$va->vals.PHP_EOL; 
         }    
+        return $lis;
+    }
+    function stringFlyJson(){
+        $arr=$this->getLocalJson();
+        $lis="[";
+        $comma=",";
+        $brOpen="{"; $brclose="}";
+        $dquote="\"";  //double quote -> "
+        $twoPoints=":";
+        foreach ($arr as $ke=>$va){
+            $lis.=$bropen.$dquote."id".$dquote.$twoPoints.$dquote.$va->id.$dquote;
+             $lis.=$comma.$dquote."vals".$dquote.$twoPoints.$dquote.$va->vals.$dquote; 
+        }    
+        $li.="]";
         return $lis;
     }
     function setLocalJson($fill){

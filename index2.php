@@ -9,6 +9,7 @@ $inputBeginEnd="";
 $formApi='false';
 $sendApi='false';
 $dellist='false';
+$slate='';
 if (isset($_POST['inputBeginEnd']) ){ $inputBeginEnd=$_POST['inputBeginEnd']; }
 
 if (isset($_POST['responseID'])){ $responseID=$_POST['responseID']; }
@@ -40,6 +41,8 @@ if ($dellist=='true'){
     $list=$b->del1ElemlocalJson($inputBeginEnd,'list');
     $dellist='false';
 }
+//$slate=$b->stringFlyJson();
+$slate=json_encode($b->getLocalJson());
 
 
 ?>
@@ -98,7 +101,11 @@ if ($dellist=='true'){
                             <input type='hidden' value="true" name="dellist">
                              &nbsp;<input type='submit' class='btn btn-sm btn-secondary' value='Del'>
                 </form>
-                <hr>    
+                <hr>  
+                <hr>
+                <input type="hidden" value='<?php echo $slate; ?>' id="inputSlate">
+                <button class="btn btn-sm btn-primary" onclick="saveSlate()">Save LocalStorage</button>
+                <hr>  
             </div><!-- End Content -->    
     </div>    
 </div>
@@ -109,7 +116,18 @@ if ($dellist=='true'){
 
 </body>
 </html>
-<?php
-
-
-?>
+<script>
+function saveSlate() { 
+      let slate = document.getElementById('inputSlate').value; 
+       localStorage.setItem('sla', slate); 
+}
+ function loadSlate() {
+     const slate = localStorage.getItem('sla'); 
+     if (sla) {
+         document.getElementById('inputSlate').innerText = slate; 
+    } 
+         else { 
+            document.getElementById('inputSlate').innerText = ''; 
+    } 
+}
+</script>    
