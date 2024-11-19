@@ -70,9 +70,9 @@ export default {
         verifyNumsToInsert(){
             let nti=this.nums;
             if (nti.length>0){
-                console.log('_w1_');
+               // console.log('_w1_');
                 if (nti.includes( +(this.nameID) ) ){
-                    console.log('>'+this.nameID);
+                   // console.log('>'+this.nameID);
                     this.insertNum(+(this.nameID));
                     return true;
                 }

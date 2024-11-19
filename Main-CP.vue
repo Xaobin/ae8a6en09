@@ -3,7 +3,7 @@ import { aStore } from '../store/store1'
 import ListBtn from './ListBtn.vue'
 import ListGroup from './ListGroup.vue'
 import ScaleBet from './ScaleBet.vue'
-import aData from '../assets/base/fdata.json'
+//import aData from '../assets/base/fdata.json'
   
 
 export default{
@@ -30,7 +30,10 @@ export default{
             selColor:'primary',
             toSelect:true,
             openTable:false,
-            slate: aData
+            //slate: aData
+            slate:[],
+            openCompare:false,
+            resultCompare:0
         }
       },  
        computed:{
@@ -103,7 +106,7 @@ export default{
             const mya = nums.split(" ");
             let neoa=[];
             mya.forEach(mi=>{
-                neoa.push(mi);
+                neoa.push(+mi);
             });
             ///for (let i=0; i<=mya.length; i++){ neoa.push(+mya[i]); }
            // this.numsToInsert=neoa;
@@ -157,6 +160,27 @@ export default{
             },
             openTab(){
                 this.openTable=!this.openTable;
+            },
+            makeCompare(){
+                let valys=this.$refs.inputCompare.value;
+               
+                 const mya = valys.split(" "); //arr string
+                let neomya=[]
+                mya.forEach(mii=>{ neomya.push(+mii) }); //arr int
+                 let cc=0;
+                 let arx=this.storex.getTmpNums();
+                
+                 arx.forEach(vaa=>{
+                    if (neomya.includes(vaa)){
+                        cc++;
+                    }
+                 });
+                 this.resultCompare=cc;
+                // */
+                
+            },
+            putCompare(val){
+                this.$refs.inputCompare.value=val;
             }
     
        
@@ -230,6 +254,9 @@ export default{
              &nbsp;<button class='badge bg-secondary' @click="scaleCards()">Scale Cards</button>
             <br>  <br>  <br>
              <p>
+              <button class='badge bg-secondary' @click="openCompare=!openCompare">Comparator</button>
+             </p> 
+             <p>
               <button class='badge bg-secondary' @click="openNotes=!openNotes">Notes</button>
              </p> 
                <p>
@@ -302,15 +329,20 @@ export default{
                <span v-if="openscale==true">
               <span v-for="vv in +scalex"> <ScaleBet /></span>
              </span>
+            <p v-if="openCompare==true"> 
+                <input type="text" class=''  ref="inputCompare" value="" size="42"> {{resultCompare}} &nbsp;
+                 <button class='badge bg-secondary' @click="makeCompare()">Compare</button>
+             </p>
              <p v-if="openNotes==true"> 
                 <textarea class='form-control' :value="storex.getNotes()" ref="inputNotes"> </textarea> 
-                 <button class='badge bg-primary' @click="storex.addNotes(this.$refs.inputNotes.value);">Save</button>
+                 <button class='badge bg-secondary' @click="storex.addNotes(this.$refs.inputNotes.value);">Save</button>
              </p>
              <p v-if="openTable==true">
                 <p v-for="ity in slate">
                    {{ity.id}} - {{ity.vals}} <button class="badge bg-secondary" 
                    @click="putVals(ity.vals)">[I]</button>&nbsp;
-                   <button class="badge bg-secondary" @click="copyV(ity.vals)">Cp</button>
+                   <button class="badge bg-secondary" @click="copyV(ity.vals)">Copy</button>
+                   &nbsp;<button class="badge bg-secondary" @click="putCompare(ity.vals)">Cp</button>
                 </p>
                 <!--input type="text" size="4" ref="inputIdLot" placeholder="ID">                
                 <input type="text" size="20" ref="inputValsLot" placeholder="Numbers to add">
