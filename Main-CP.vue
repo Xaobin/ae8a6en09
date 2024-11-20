@@ -304,24 +304,20 @@ export default{
         </span>
 
    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-        <span v-if="opNums==true">
-         
-         &nbsp;
-         <br><br>
+        <div class="" v-if="opNums==true">
+         <br>
         <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" 
         :nums="numsToInsert" :toselect="toSelect" :selcolor="selColor" />
-       
-        </span>
+         <br>
+        </div>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-        <span v-if="opNums==false">
-         
-         &nbsp;
-         <br><br>
+        <div class="" v-if="opNums==false">
+         <br>
         <ListBtn :amount="listAmount" :colls="listColls" :zero="listHaveZero" 
         :nums="numsToInsert" :toselect="toSelect" :selcolor="selColor" />
-       
-        </span>
+         <br>       
+        </div>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- Table, Compare, Notes -->
            <span v-if="((openscale==true)||(openCompare==true)||(openNotes==true))"><hr></span>
@@ -397,5 +393,6 @@ export default{
             width: auto;
             overflow-y: scroll;
         }
+        
 
 </style>

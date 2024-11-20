@@ -29,6 +29,28 @@ export default {
             }
             
             return arr;
+         },
+         txtCalcMaxWidth(){
+            
+            let z=+this.colls;
+            let w=10;
+          
+            for(let i=0; i<=z; i++){
+                
+                if (((i % 3)==0)&&(z>3)){ w+=1; } 
+                if (((i % 5)==0)&&(z>1)){ w+=1; }
+               // if (((i % 5)==0)&&(z>1)&&(i<=10)){ w+=1; }
+                //if (((i % 5)==0)&&(z>1)&&(i<=5)){ w+=1; }
+                if (((i % 7)==0)&&(z>7)){ w+=1; }
+               // if (((i % 9)==0)&&(z>9)){ w+=1; }
+              //  if ( (i>17)&&((i % 2)!=0)&&((i % 3)!=0)&&((i % 4)!=0) ){ w+=1; }
+            }
+           //4 deu 30%
+            let x=(4*z)+w;
+            let y=Math.floor(x); 
+            //if (y==27){ y=26; }
+            return "max-width:"+y+"%;"
+            
          }
         
             
@@ -36,32 +58,31 @@ export default {
        
        mounted(){
         
-           // this.numsII=this.preNums;
-            //this.nums=this.preNums;
-       
-      //  let rr='';
-       // this.numsII.forEach(ii=>{
-     //       rr+=" "+ii;
-     //   });
-     //   console.log(rr);
-     //   console.log(this.numsII);
-       // console.log('Component list');
-        //console.log('Amount:'+this.amount+' type of:'+(typeof this.amount));
-      //  console.log('Colls:'+this.colls+' type of:'+(typeof this.colls));
-      //  console.log('Zero:'+this.zero+' type of:'+(typeof this.zero));
-      //  console.log(this.amountCP);
+
       }  
     }
 </script>
 
 <template>
-<div>
+<div class="stillb" :style="txtCalcMaxWidth"> 
 
  <span v-for="itt,khey in amountCP" :key="khey">
-    <span v-if="(( (khey % (+colls))==0) &&(khey>0) )"><br></span>
+    <span v-if="(( (khey % (+colls))==0) &&(khey>0) )"></span>
           <Btn :nameID="itt" :nums="nums" :toselect="toselect" :selcolor="selcolor" /> 
 </span>
 
  </div>
 </template>
-
+<style scoped>
+.stillb{
+    border-radius: 6px;
+    background-color: aliceblue;
+    border: 2px dashed gray;
+    margin:auto;
+     padding: 1em;
+    /*max-width:55%; */
+}
+.stillc{
+    white-space: pre-line;
+}
+</style>
