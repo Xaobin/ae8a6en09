@@ -180,6 +180,7 @@ export default{
                 
             },
             putCompare(val){
+                this.openCompare=true;
                 this.$refs.inputCompare.value=val;
             }
     
@@ -322,33 +323,44 @@ export default{
        
         </span>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-       
-        </div> <!-- End centralBtns -->
-         <br>
+<!-- Table, Compare, Notes -->
+           <span v-if="((openscale==true)||(openCompare==true)||(openNotes==true))"><hr></span>
+           
             <small>
-               <span v-if="openscale==true">
-              <span v-for="vv in +scalex"> <ScaleBet /></span>
-             </span>
-            <p v-if="openCompare==true"> 
+               <div class="card" style="overflow:auto" v-if="openscale==true">
+              
+                 <span v-for="vv in +scalex"> <ScaleBet /></span>
+              </div>
+            <div class="" v-if="openCompare==true"> 
+            
                 <input type="text" class=''  ref="inputCompare" value="" size="42"> {{resultCompare}} &nbsp;
                  <button class='badge bg-secondary' @click="makeCompare()">Compare</button>
-             </p>
-             <p v-if="openNotes==true"> 
+             </div>
+             <div class="card" v-if="openNotes==true" style="overflow:auto"> 
+                <p>
                 <textarea class='form-control' :value="storex.getNotes()" ref="inputNotes"> </textarea> 
                  <button class='badge bg-secondary' @click="storex.addNotes(this.$refs.inputNotes.value);">Save</button>
-             </p>
-             <p v-if="openTable==true">
-                <p v-for="ity in slate">
-                   {{ity.id}} - {{ity.vals}} <button class="badge bg-secondary" 
-                   @click="putVals(ity.vals)">[I]</button>&nbsp;
-                   <button class="badge bg-secondary" @click="copyV(ity.vals)">Copy</button>
-                   &nbsp;<button class="badge bg-secondary" @click="putCompare(ity.vals)">Cp</button>
                 </p>
-                <!--input type="text" size="4" ref="inputIdLot" placeholder="ID">                
-                <input type="text" size="20" ref="inputValsLot" placeholder="Numbers to add">
-                <button class="badge bg-primary" @click="insertLot()">Add</button -->
-                </p>
-             </small>   
+             </div>
+            
+                
+            <div v-if="openTable==true" class="scrollbar-auto">
+             <hr>
+                <span class="row" v-for="ity in slate">
+                    <p class="col">
+                    {{ity.id}} - {{ity.vals}} 
+                        <button class="badge bg-secondary" 
+                        @click="putVals(ity.vals)">[I]</button>&nbsp;
+                        <button class="badge bg-secondary" @click="copyV(ity.vals)">Copy</button>
+                        &nbsp;<button class="badge bg-secondary" @click="putCompare(ity.vals)">Cp</button>
+                    </p> 
+                </span>
+              </div>  
+            </small>
+
+
+        </div> <!-- End centralBtns, table and more -->
+         
       </div>
      </div>
 
@@ -378,3 +390,12 @@ export default{
   
 </template>
 
+<style scoped>
+.scrollbar-auto {
+            scrollbar-width: auto;
+            height: 150px;
+            width: auto;
+            overflow-y: scroll;
+        }
+
+</style>
