@@ -33,7 +33,9 @@ export default{
             //slate: aData
             slate:[],
             openCompare:false,
-            resultCompare:0
+            resultCompare:0,
+            dkClass:'bg-dark text-white',
+            dataBsTheme:'dark'
         }
       },  
        computed:{
@@ -182,6 +184,22 @@ export default{
             putCompare(val){
                 this.openCompare=true;
                 this.$refs.inputCompare.value=val;
+            },
+            setDark(um){
+                if (um==1){ this.dataBsTheme="dark"; this.dkClass="bg-dark text-white"; }
+                if (um==0){ this.dataBsTheme=""; this.dkClass=""; }
+            },
+            changeTheme(){
+                //data-bs-theme="dark"
+               if (this.dataBsTheme=="dark"){
+                    this.dkClass=""; this.dataBsTheme="";
+                    this.storex.setTheme(0); this.setDark(0);
+               }
+               else{
+                   this.setDark(1);
+                    this.storex.setTheme(1);
+               }
+
             }
     
        
@@ -195,6 +213,7 @@ export default{
            // this.storex.setSlate(this.slate);
        // } else{
             this.slate=this.storex.getSlate();
+            if (this.storex.getTheme()==1){ this.setDark(1); }
        // }
         
       }     
@@ -203,11 +222,15 @@ export default{
 </script>
 
 <template>
- <nav class="navbar-sm navbar-expand-sm bg-dark navbar-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Lothvi</a>
-  </div>
-</nav> 
+<div :class="dkClass" :data-bs-theme="dataBsTheme">
+<li class="bg-dark">
+&nbsp;&nbsp;<span class="text-white">Lothvi</span>
+    <span class="float-end">
+    <small><button class="badge bg-dark" @click="changeTheme()">Dark mode</button></small>
+    &nbsp;&nbsp;
+    </span>
+</li>
+  
 
 <div class="container  mt-3 ml-4">
 <!-- left --><!-- left -->
@@ -383,7 +406,9 @@ export default{
 
      <br><br><br>
 </div>
-  
+
+
+</div>
 </template>
 
 <style scoped>

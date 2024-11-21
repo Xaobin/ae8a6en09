@@ -10,9 +10,12 @@ export const aStore = defineStore({
         general: useStorage('gen',[]),
         limit: useStorage('lim',0),
         notes: useStorage('not',''),
-        slate: useStorage('sla',[])
+        slate: useStorage('sla',[]),
+        theme: useStorage('the',0)
     }),
     actions: {
+        setTheme(tt){ this.theme=tt; },
+        getTheme(){ return this.theme; },
         setSlate(sll){
             this.slate=sll;
         },
